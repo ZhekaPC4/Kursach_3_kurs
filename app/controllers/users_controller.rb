@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def log_out
     session[:user_id] = nil
-    redirect_to user_page_path
+    redirect_to user_login_path
   end
 
 
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     if not @user.present?
       render_not_found
     elsif session[:user_id] != @user.id
-      redirect_to user_page_path
+      redirect_to main_page_path
     end
     rescue ActiveRecord::RecordNotFound
       render_not_found
