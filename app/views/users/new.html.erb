@@ -1,0 +1,69 @@
+<h1>Регистрация<h1>
+<h3 class="error"><%= flash[:auth_error] %><h3>
+
+<form action="<%= user_create_path %>" method="POST" class="forma">
+
+<%= csrf_meta_tags %>
+<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+<input type="string" name="login" placeholder="Логин" class="form_element" required>
+<input type="string" name="name" placeholder="Ваше имя" id="name" class="form_element" required>
+<input type="password" name="password" placeholder="Пароль" id="password" oninput="pass_check()" class="form_element" required>
+<input type="password" name="password2" placeholder="Подтвердите пароль" id="password2" oninput="pass_check()" class="form_element" required>
+<input type="submit" value="Зарегистрироваться" id="create_butt">
+
+</form>
+
+<h3 class="error" id="error"><%= flash[:reg_error] %><h3>
+
+<style>
+.error{
+  color: red
+}
+.forma{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+}
+.form_element{
+  margin-bottom: 15px;
+}
+.main_page{
+  display: inline;
+}
+.main_part{
+  width: 87%;
+}
+.auth{
+  margin-left:80%;
+}
+</style>
+
+
+
+<script>
+if ("<%= current_user.present? %>" == "true"){
+    document.getElementById('forms').style.display = 'none';
+    document.getElementById('hello_text').style.display = 'block';
+     document.getElementById('exit').style.display = 'block';
+  }
+else {
+  document.getElementById('hello_text').style.display = 'none';
+  document.getElementById('forms').style.display = 'block';
+  document.getElementById('exit').style.display = 'none';
+  }
+  
+function pass_check()
+  {         
+    var pass1 = document.getElementById("password").value;
+    var pass2 = document.getElementById("password2").value;
+    if (pass1 != pass2) { 
+      document.getElementById('error').innerHTML = 'Пароли не совпадают'
+      create_butt.disabled = true; }  
+    else {
+      document.getElementById('error').innerHTML = null;
+      create_butt.disabled = false;}
+  }
+
+
+</script>
