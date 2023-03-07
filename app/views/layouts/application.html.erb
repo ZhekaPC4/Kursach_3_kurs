@@ -11,18 +11,17 @@
   </head>
   
   <div class="site_header">
-    <a class="to_main_page" href=<%= main_page_path %>>На главную страницу</a>
+    <a class="site_header_button" href=<%= main_page_path %>>На главную страницу</a>
     <% if current_user.present? %>  
-      <a class="to_user" href=<%= user_path(current_user.id) %>>Профиль</a>
-      <a class="to_user_log_out" href=<%= user_log_out_path %>>Выйти из аккаунта</a>
+      <a class="site_header_button" href=<%= user_path(current_user.id) %>>Профиль</a>
+      <a class="site_header_button" href=<%= user_log_out_path %>>Выйти из аккаунта</a>
     <% else %>  
-      <a class="to_user_page" href=<%= user_login_path %>>Авторизация</a>
-      <a class="to_create_page" href=<%= user_new_path %>>Регистрация</a>
+      <a class="site_header_button" href=<%= user_login_path %>>Авторизация</a>
+      <a class="site_header_button" href=<%= user_new_path %>>Регистрация</a>
     <% end %>
   </div>
   <style>
-    .to_main_page{
-      position: relative;
+    .site_header_button{
       margin: 0px  20px;
       padding: 6px;
       border: solid black;
