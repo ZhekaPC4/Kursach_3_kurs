@@ -1,14 +1,13 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
+
   def index
-  end
-      
+  end    
 
   def log_out
     session[:user_id] = nil
     redirect_to user_login_path
   end
-
 
   def auth
       @user = User.find_by(login: params[:alogin], password: params[:apassword])
@@ -36,7 +35,6 @@ class UsersController < ApplicationController
       render_not_found
   end
 
-
   def new
   end
 
@@ -49,14 +47,11 @@ class UsersController < ApplicationController
         flash[:reg_error] = "Логин уже используется"
         redirect_to user_new_path
     else
-        if params[:password] != params[:password2]
+        if params[:password] != params[:password_confirmation]
           flash[:reg_error] = "Пароли не совпадают"
           redirect_to user_new_path
         else
-          @user = User.new
-          @user.login = params[:login]
-          @user.password = params[:password]
-          @user.name = params[:name]
+          @user = User.new(user_params)
           if @user.save
             session[:user_id] = @user.id
             redirect_to user_path(id: @user.id)
@@ -66,5 +61,10 @@ class UsersController < ApplicationController
           end
         end
     end
+  end
+  
+  private
+  def user_params
+    params.require(:user).permit(:name, :login, :password, :password_confirmation)
   end
 end
