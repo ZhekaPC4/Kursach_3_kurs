@@ -10,14 +10,14 @@ class UsersController < ApplicationController
   end
 
   def auth
-      @user = User.find_by(login: params[:alogin], password: params[:apassword])
-      if @user.present?
-        session[:user_id] = @user.id
-        redirect_to user_path(id: @user.id)
-      else
-        flash[:error] = "Неверный логин или пароль"
-        redirect_to user_login_path
-      end
+    @user = User.new(user_params)
+    if @user.present?
+      session[:user_id] = @user.id
+      redirect_to user_path(id: @user.id)
+    else
+      flash[:error] = "Неверный логин или пароль"
+      redirect_to user_login_path
+    end
   end
 
   def render_not_found
@@ -42,24 +42,13 @@ class UsersController < ApplicationController
   end
   
   def create
-    @user = User.find_by(login: params[:login])
-    if @user.present?
-        flash[:reg_error] = "Логин уже используется"
-        redirect_to user_new_path
+    @user = User.new(user_params)
+    if @user.save
+      session[:user_id] = @user.id
+      redirect_to user_path(id: @user.id)
     else
-        if params[:password] != params[:password_confirmation]
-          flash[:reg_error] = "Пароли не совпадают"
-          redirect_to user_new_path
-        else
-          @user = User.new(user_params)
-          if @user.save
-            session[:user_id] = @user.id
-            redirect_to user_path(id: @user.id)
-          else
-            flash[:reg_error] = "Ошибка сохранения"
-            redirect_to user_new_path
-          end
-        end
+      flash[:reg_error] = @user.save!
+      redirect_to user_new_path
     end
   end
   

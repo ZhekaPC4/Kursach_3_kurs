@@ -7,7 +7,7 @@
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
 <input type="string" name="user[login]" placeholder="Логин" class="form_element" required>
-<input type="string" nname="user[name]" placeholder="Ваше имя" id="name" class="form_element" required>
+<input type="string" name="user[name]" placeholder="Ваше имя" id="name" class="form_element" required>
 <input type="password" name="user[password]" placeholder="Пароль" id="password" oninput="pass_check()" class="form_element" required>
 <input type="password" name="user[password_confirmation]" placeholder="Подтвердите пароль" id="password2" oninput="pass_check()" class="form_element" required>
 <input type="submit" value="Зарегистрироваться" id="create_butt">
