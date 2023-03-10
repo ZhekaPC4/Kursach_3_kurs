@@ -10,12 +10,12 @@ class UsersController < ApplicationController
   end
 
   def auth
-    @user = User.new(user_params)
+    @user = User.find_by(login: user_params[:login], password: user_params[:password])
     if @user.present?
       session[:user_id] = @user.id
       redirect_to user_path(id: @user.id)
     else
-      flash[:error] = "Неверный логин или пароль"
+      flash[:error] = "Неверные логин или пароль"
       redirect_to user_login_path
     end
   end
@@ -47,13 +47,22 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to user_path(id: @user.id)
     else
-      flash[:reg_error] = @user.save!
+      flash[:reg_error] = @user.password
       redirect_to user_new_path
     end
   end
   
   private
   def user_params
-    params.require(:user).permit(:name, :login, :password, :password_confirmation)
+    new_params = params.require(:user).permit(:name, :login, :password, :password_confirmation)
+    new_params[:password] = coding(new_params[:login], new_params[:password])
+    new_params[:password_confirmation] = coding(new_params[:login], new_params[:password_confirmation])
+    new_params.permit!
   end
+
+  def coding(salt, password)
+    hash_password = Digest::SHA512.hexdigest(salt + "kekWkekW" + password.to_s)
+    return Digest::SHA512.hexdigest(hash_password + "Say_my_name")
+  end
+
 end

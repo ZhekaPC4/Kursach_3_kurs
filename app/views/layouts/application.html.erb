@@ -15,10 +15,14 @@
     <% if current_user.present? %>  
       <a class="site_header_button" href=<%= user_path(current_user.id) %>>Профиль</a>
       <a class="site_header_button" href=<%= user_log_out_path %>>Выйти из аккаунта</a>
+      <% if current_user.role == "admin" || current_user.role == "editor" %>  
+        <a class="site_header_button" href=<%= article_new_path %>>Новая статья</a>
+      <% end %>
     <% else %>  
       <a class="site_header_button" href=<%= user_login_path %>>Авторизация</a>
       <a class="site_header_button" href=<%= user_new_path %>>Регистрация</a>
     <% end %>
+
   </div>
   <style>
     .site_header_button{

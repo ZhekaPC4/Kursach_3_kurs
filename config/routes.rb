@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
 
   get "/", to: 'articles#index', as: :main_page
-  get "/articles/:id", to: "articles#show"
+  get "/articles/:id", to: "articles#show", as: :article_by_id
 
 	get "login/", to: 'users#login', as: :user_login
   post "/user/auth", to: 'users#auth', as: :user_auth
@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
    get "/logout", to: 'users#log_out', as: :user_log_out
 
+   get "article/new", to: 'articles#new', as: :article_new
+   get "article/create", to: 'articles#create', as: :article_create
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

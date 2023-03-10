@@ -7,5 +7,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :role, presence: true, null: false, default: "visitor"
       t.timestamps
     end
+    
+    User.create(login: "Dababy", password: "PivoPivo", name: "Dababer", role: "admin")
   end
 end
