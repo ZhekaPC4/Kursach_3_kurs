@@ -1,3 +1,4 @@
+include ApplicationHelper
 class CreateUsers < ActiveRecord::Migration[7.0]
   def change
     create_table :users do |t|
@@ -8,6 +9,6 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.timestamps
     end
     
-    User.create(login: "Dababy", password: "PivoPivo", name: "Dababer", role: "admin")
+    User.create(login: "Dababy", password: hash_password("Dababy", "PivoPivo"), name: "Dababer", role: "admin")
   end
 end

@@ -55,14 +55,9 @@ class UsersController < ApplicationController
   private
   def user_params
     new_params = params.require(:user).permit(:name, :login, :password, :password_confirmation)
-    new_params[:password] = coding(new_params[:login], new_params[:password])
-    new_params[:password_confirmation] = coding(new_params[:login], new_params[:password_confirmation])
+    new_params[:password] = hash_password(new_params[:login], new_params[:password])
+    new_params[:password_confirmation] = hash_password(new_params[:login], new_params[:password_confirmation])
     new_params.permit!
-  end
-
-  def coding(salt, password)
-    hash_password = Digest::SHA512.hexdigest(salt + "kekWkekW" + password.to_s)
-    return Digest::SHA512.hexdigest(hash_password + "Say_my_name")
   end
 
 end
