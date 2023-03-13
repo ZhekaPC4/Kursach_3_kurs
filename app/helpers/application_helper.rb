@@ -11,4 +11,12 @@ module ApplicationHelper
     return Digest::SHA512.hexdigest(hashed_password + "Say_my_name")
   end
   
+  def admin_or_editor
+    if !current_user.present?
+      return false
+    elsif current_user.role != "admin" && current_user.role != "editor"
+      return false
+    end
+    return true
+  end
 end

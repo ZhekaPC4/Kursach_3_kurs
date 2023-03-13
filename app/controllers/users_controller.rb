@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     if not @user.present?
       render_not_found
-    elsif session[:user_id] != @user.id
+    elsif session[:user_id] != @user.id && current_user[:role] != "admin"
       redirect_to main_page_path
     end
     rescue ActiveRecord::RecordNotFound
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
   end
 
   def all
-    @user = User.all
+    @users = User.all
   end
 
   private

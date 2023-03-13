@@ -1,3 +1,9 @@
-<h1> Добро пожаловать, <%= @user.name %></h1>
-<h1> Пароль, <%= @user.password %></h1>
-<h1> Роль, <%= @user.role %></h1>
+<% if @user.id == current_user[:id]%>
+    <h1> Добро пожаловать, <%= @user.name %></h1>
+    <h1> Пароль, <%= @user.password %></h1>
+    <h1> Роль, <%= @user.role %></h1>
+<% else %>
+    <h1> Имя пользователя, <%= @user.name %></h1>
+    <h1> Пароль, <%= @user.password %></h1>
+    <h1> Роль, <%= @user.role %></h1>
+<% end%>

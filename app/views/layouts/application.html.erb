@@ -18,7 +18,7 @@
       <% if current_user.role == "admin" || current_user.role == "editor" %>  
         <a class="site_header_button" href=<%= article_new_path %>>Новая статья</a>
       <% end %>
-      <% if current_user.role == "admin" || current_user.role == "editor" %>  
+      <% if current_user.role == "admin" %>  
         <a class="site_header_button" href=<%= user_all_path %>>Пользователи</a>
       <% end %>
     <% else %>  
