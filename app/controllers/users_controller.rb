@@ -51,7 +51,11 @@ class UsersController < ApplicationController
       redirect_to user_new_path
     end
   end
-  
+
+  def all
+    @user = User.all
+  end
+
   private
   def user_params
     new_params = params.require(:user).permit(:name, :login, :password, :password_confirmation)

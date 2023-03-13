@@ -7,6 +7,50 @@ class ArticlesController < ApplicationController
   end
   
   def new
+    if !current_user.present?
+      redirect_to main_page_path
+    elsif current_user.role != "admin" && current_user.role != "editor"
+      redirect_to main_page_path
+    end
+  end
+
+  def delete
+    if !current_user.present?
+      redirect_to main_page_path
+    elsif current_user.role != "admin" && current_user.role != "editor"
+      redirect_to main_page_path
+    else
+      @article = Article.find(params[:id])
+      @article.destroy
+      redirect_to main_page_path
+    end
+  end
+
+  def edit
+    if !current_user.present?
+      redirect_to main_page_path
+    elsif current_user.role != "admin" && current_user.role != "editor"
+      redirect_to main_page_path
+    else
+      @article = Article.find(params[:id])
+    end
+  end
+
+  def change
+    if !current_user.present?
+      redirect_to main_page_path
+    elsif current_user.role != "admin" && current_user.role != "editor"
+      redirect_to main_page_path
+    else
+      @article = Article.find(params[:id])
+      @article.update_columns(title: article_params[:title], text: article_params[:text])
+      if @article.save
+        redirect_to main_page_path
+      else 
+        flash[:edit_error] = "Ошибка изменения"
+        redirect_to article_edit_path
+      end
+    end
   end
 
   def create

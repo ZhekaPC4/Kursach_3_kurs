@@ -1,0 +1,17 @@
+<h1>Все юзеры</h1>
+
+<ul>
+  <% @users.each do |user| %>
+    <li>
+      <a href="/user/<%= user.id %>">
+        <%= user.login %>
+      </a>
+        <p>
+          <%= user.name%> 
+        </p>
+        <p>
+          <%= user.role%> 
+        </p>
+    </li>
+  <% end %>
+</ul>

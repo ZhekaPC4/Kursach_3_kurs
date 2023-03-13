@@ -1,3 +1,9 @@
 <h1> <%= @article.title%> </h1>
 <a> <%= @article.text%> </a>
 <h3> Автор <%= @article.author.name%> </h3>
+
+ <% if current_user.role == "admin" || current_user.role == "editor" %>  
+    <a class="delete_button" href=<%= article_delete_path%>> Удалить эту статью </a>
+    <br>
+    <a class="edit_button" href=<%= article_edit_path%>> Изменить эту статью </a>
+<% end %>
