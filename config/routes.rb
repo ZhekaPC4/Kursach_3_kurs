@@ -15,6 +15,10 @@ Rails.application.routes.draw do
 
   get "/logout", to: 'users#log_out', as: :user_log_out
 
+  get "/user/edit/:id", to: 'users#edit', as: :user_edit
+  post "/user/edited/:id", to: 'users#edited', as: :user_edited
+
+
   get "article/new", to: 'articles#new', as: :article_new
   get "article/create", to: 'articles#create', as: :article_create
   get "article/:id/delete", to: 'articles#delete', as: :article_delete

@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   def index
     @articles = Article.all
+#    raise current_user.inspect
   end
 
   def show

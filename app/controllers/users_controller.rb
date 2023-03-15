@@ -1,9 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  def index
-  end    
-
   def log_out
     session[:user_id] = nil
     redirect_to user_login_path
@@ -28,7 +25,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     if not @user.present?
       render_not_found
-    elsif session[:user_id] != @user.id && current_user[:role] != "admin"
+    elsif session[:user_id] != @user.id && current_user.role != "admin"
       redirect_to main_page_path
     end
     rescue ActiveRecord::RecordNotFound
@@ -53,7 +50,44 @@ class UsersController < ApplicationController
   end
 
   def all
-    @users = User.all
+    if !current_user.present?
+      redirect_to main_page_path
+    elsif current_user.role != "admin"
+      redirect_to main_page_path
+    else
+      @users = User.all
+    end 
+
+  end
+
+  def edit
+    @user = User.find_by(id: params[:id])
+    if session[:user_id] != @user.id && current_user.role != "admin"
+      redirect_to main_page_path
+    end
+  end
+
+  def edited
+    @user = User.find_by(id: params[:id])
+    if current_user.password != user_change_params[:password_old] 
+      flash[:error] = "Неверный пароль"
+      redirect_to user_edit_path(@user.id)
+    else
+      if user_change_params[:change_pass] == "true"
+        @user.update_columns(login: user_change_params[:login], name: user_change_params[:name], password: user_change_params[:password])
+      else 
+        @user.update_columns(login: user_change_params[:login], name: user_change_params[:name])
+      end
+      if @user.save && current_user.role == "admin" 
+        @user.update_columns(role: user_change_params[:role])
+      end
+      if @user.save
+        redirect_to user_path(@user.id)
+      else 
+        flash[:edit_error] = "Ошибка изменения"
+        redirect_to user_edit_path(@user.id)
+      end
+    end
   end
 
   private
@@ -63,5 +97,14 @@ class UsersController < ApplicationController
     new_params[:password_confirmation] = hash_password(new_params[:login], new_params[:password_confirmation])
     new_params.permit!
   end
+
+  def user_change_params
+    new_params = params.require(:user).permit(:name, :login, :password, :password_confirmation, :password_old,:change_pass, :role)
+    new_params[:password] = hash_password(new_params[:login], new_params[:password])
+    new_params[:password_confirmation] = hash_password(new_params[:login], new_params[:password_confirmation])
+    new_params[:password_old] = hash_password(current_user.login, new_params[:password_old])
+    new_params.permit!
+  end
+
 
 end
