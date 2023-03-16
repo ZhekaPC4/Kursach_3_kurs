@@ -67,6 +67,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def delete
+    @user = User.find_by(id: params[:id])
+    if session[:user_id] != @user.id && current_user.role != "admin"
+      redirect_to main_page_path
+    else
+      if session[:user_id] == @user.id
+        session[:user_id] = nil
+      end
+      @user.destroy
+      redirect_to main_page_path
+    end
+  end
+
   def edited
     @user = User.find_by(id: params[:id])
     if current_user.password != user_change_params[:password_old] 

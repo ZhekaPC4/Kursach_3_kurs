@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "/user/all", to: 'users#all', as: :user_all
 
   get "/logout", to: 'users#log_out', as: :user_log_out
+  get "/user/delete/:id", to: 'users#delete', as: :user_delete
 
   get "/user/edit/:id", to: 'users#edit', as: :user_edit
   post "/user/edited/:id", to: 'users#edited', as: :user_edited
