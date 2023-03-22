@@ -3,4 +3,5 @@ class User < ApplicationRecord
     validates :name, length: { minimum: 2 }
     validates :password, length: { minimum: 6 }, confirmation: true
     has_many :articles
+
 end

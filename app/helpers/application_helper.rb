@@ -11,7 +11,7 @@ module ApplicationHelper
     return Digest::SHA512.hexdigest(hashed_password + "Say_my_name")
   end
   
-  def admin_or_editor
+  def is_admin_or_editor
     if !current_user.present?
       return false
     elsif current_user.role != "admin" && current_user.role != "editor"
@@ -19,4 +19,19 @@ module ApplicationHelper
     end
     return true
   end
+
+  def is_user_or_admin
+    if session[:user_id] != @user.id && current_user.role != "admin"
+      redirect_to main_page_path and return false
+    end
+    return true
+  end
+
+  def is_admin
+    if current_user.role != "admin"
+      redirect_to main_page_path and return false
+    end
+    return true
+  end
+
 end

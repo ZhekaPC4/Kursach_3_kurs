@@ -19,7 +19,7 @@
         <a class="site_header_button" href=<%= article_new_path %>>Новая статья</a>
       <% end %>
       <% if current_user.role == "admin" %>  
-        <a class="site_header_button" href=<%= user_all_path %>>Пользователи</a>
+        <a class="site_header_button" href=<%= user_index_path %>>Пользователи</a>
       <% end %>
     <% else %>  
       <a class="site_header_button" href=<%= user_login_path %>>Авторизация</a>

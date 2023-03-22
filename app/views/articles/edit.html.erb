@@ -1,7 +1,7 @@
 <h1>Редактирование статьи<h1>
 <h3 class="error"><%= flash[:edit_error] %><h3>
 
-<form action="<%= article_change_path %>" method="GET" class="forma">
+<form action="<%= article_update_path %>" method="GET" class="forma">
 
 <%= csrf_meta_tags %>
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
@@ -10,7 +10,7 @@
 <h3> Текст </h3>
 <input type="string" name="article[text]" value="<%= @article.text %>" placeholder="Содержание" id="name" class="form_element" required>
 <input type="string" name="article[author_id]" value="<%= @article.author_id %>" hidden>
-<a сlass="form_element"> Автор <%= @article.author.name %> </a>
+<a class="form_element"> Автор <%= @article.author.name %> </a>
 <input type="submit" value="Подтвердить изменение" id="create_butt">
 
 </form>

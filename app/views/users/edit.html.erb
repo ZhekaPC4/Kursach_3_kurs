@@ -1,6 +1,6 @@
 <h1>Смена данных аккаунта<h1>
 
-<form action="<%= user_edited_path %>" method="POST" class="forma">
+<form action="<%= user_update_path %>" method="POST" class="forma">
 <p class="form_text"> Ваше имя </p>
 <input type="string" name="user[name]" value="<%= @user.name %>" placeholder="Ваше имя" id="name" class="form_element" required>
 
@@ -29,7 +29,7 @@
 
 </form>
 
-<h3 class="error" id="error"><%= flash[:error] %><h3>
+<h3 class="error" id="error"><%= flash[:update_error] %><h3>
 <style>
 .error{
   color: red

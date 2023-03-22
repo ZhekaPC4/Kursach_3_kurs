@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
+  #skip_before_action :is_user_or_admin, except: [:show, :edit, :update, :delete]
+  #skip_before_action :is_admin, except: [:index]
 
   def log_out
     session[:user_id] = nil
@@ -25,8 +27,6 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     if not @user.present?
       render_not_found
-    elsif session[:user_id] != @user.id && current_user.role != "admin"
-      redirect_to main_page_path
     end
     rescue ActiveRecord::RecordNotFound
       render_not_found
@@ -49,57 +49,45 @@ class UsersController < ApplicationController
     end
   end
 
-  def all
-    if !current_user.present?
-      redirect_to main_page_path
-    elsif current_user.role != "admin"
-      redirect_to main_page_path
-    else
-      @users = User.all
-    end 
-
+  def index
+    @users = User.all
   end
 
   def edit
     @user = User.find_by(id: params[:id])
-    if session[:user_id] != @user.id && current_user.role != "admin"
-      redirect_to main_page_path
+  end
+
+  def update
+    @user = User.find_by(id: params[:id])
+    if current_user.password != user_change_params[:password_old] 
+      flash[:update_error] = "Неверный пароль"
+      redirect_to user_edit_path(@user.id) and return
+    else
+      if user_change_params[:change_pass]
+        @user.update({login: user_change_params[:login], name: user_change_params[:name], password: user_change_params[:password]})
+      else 
+        @user.update({login: user_change_params[:login], name: user_change_params[:name], password: hash_password(user_change_params[:login], user_change_params[:password_old_unhashed])})
+      end
+      if @user.save && current_user.role == "admin"
+        @user.update({role: user_change_params[:role]})
+      end
+      if @user.save
+        redirect_to user_path(@user.id) and return
+      else 
+        flash[:update_error] = "Ошибка изменения"
+        redirect_to user_edit_path(@user.id)
+      end
     end
   end
 
   def delete
     @user = User.find_by(id: params[:id])
-    if session[:user_id] != @user.id && current_user.role != "admin"
-      redirect_to main_page_path
-    else
+    if is_user_or_admin
       if session[:user_id] == @user.id
         session[:user_id] = nil
       end
       @user.destroy
-      redirect_to main_page_path
-    end
-  end
-
-  def edited
-    @user = User.find_by(id: params[:id])
-    if current_user.password != user_change_params[:password_old] 
-      flash[:error] = "Неверный пароль"
-      redirect_to user_edit_path(@user.id)
-    else
-      if user_change_params[:change_pass] == "true"
-        @user.update_columns(login: user_change_params[:login], name: user_change_params[:name], password: user_change_params[:password])
-      else 
-        @user.update_columns(login: user_change_params[:login], name: user_change_params[:name])
-      end
-      if @user.save && current_user.role == "admin" 
-        @user.update_columns(role: user_change_params[:role])
-      end
-      if @user.save
-        redirect_to user_path(@user.id)
-      else 
-        flash[:edit_error] = "Ошибка изменения"
-        redirect_to user_edit_path(@user.id)
-      end
+      redirect_to user_index_path
     end
   end
 
@@ -112,12 +100,12 @@ class UsersController < ApplicationController
   end
 
   def user_change_params
-    new_params = params.require(:user).permit(:name, :login, :password, :password_confirmation, :password_old,:change_pass, :role)
+    new_params = params.require(:user).permit(:name, :login, :password, :password_confirmation, :password_old,:change_pass, :role, :password_old_unhashed)
+    new_params[:password_old_unhashed] = new_params[:password_old];
     new_params[:password] = hash_password(new_params[:login], new_params[:password])
     new_params[:password_confirmation] = hash_password(new_params[:login], new_params[:password_confirmation])
     new_params[:password_old] = hash_password(current_user.login, new_params[:password_old])
     new_params.permit!
   end
-
 
 end
