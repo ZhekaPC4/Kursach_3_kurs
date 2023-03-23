@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
-  #skip_before_action :is_user_or_admin, except: [:show, :edit, :update, :delete]
-  #skip_before_action :is_admin, except: [:index]
+  before_action :is_user_or_admin, only: [:show, :edit, :update, :delete]
+  before_action :is_admin, only: [:index]
 
   def log_out
     session[:user_id] = nil

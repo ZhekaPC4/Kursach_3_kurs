@@ -1,10 +1,10 @@
 <h1>Смена данных аккаунта<h1>
 
 <form action="<%= user_update_path %>" method="POST" class="forma">
-<p class="form_text"> Ваше имя </p>
+<p class="form_text"> Имя </p>
 <input type="string" name="user[name]" value="<%= @user.name %>" placeholder="Ваше имя" id="name" class="form_element" required>
 
-<p class="form_text"> Ваш логин </p>
+<p class="form_text"> Логин </p>
 <input type="string" name="user[login]" value="<%= @user.login %>" placeholder="Ваше имя" id="name" class="form_element" required>
 
 <p class="form_text"> Ваш текущий пароль </p>

@@ -13,15 +13,15 @@ module ApplicationHelper
   
   def is_admin_or_editor
     if !current_user.present?
-      return false
+      redirect_to user_login_path and return false
     elsif current_user.role != "admin" && current_user.role != "editor"
-      return false
+      redirect_to main_page_path and return false
     end
     return true
   end
 
   def is_user_or_admin
-    if session[:user_id] != @user.id && current_user.role != "admin"
+    if session[:user_id].to_s != params[:id] && current_user.role != "admin"
       redirect_to main_page_path and return false
     end
     return true

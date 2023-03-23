@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  #skip_before_action :is_admin_or_editor, except: [:new, :delete, :edit, :update, :create]
+  before_action :is_admin_or_editor, except: [:index, :show]
   
    def index
     @articles = Article.all
