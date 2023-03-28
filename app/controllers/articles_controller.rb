@@ -2,7 +2,7 @@ class ArticlesController < ApplicationController
   before_action :is_admin_or_editor, except: [:index, :show]
   
    def index
-    @articles = Article.all.order(id: :desc)
+    @articles = Article.order(id: :desc).page params[:page]
   end
 
   def show

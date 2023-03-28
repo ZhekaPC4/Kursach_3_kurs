@@ -1,5 +1,4 @@
 <h1>Новости</h1>
-
 <ul>
   <% @articles.each do |article| %>
     <li>
@@ -15,3 +14,4 @@
     </li>
   <% end %>
 </ul>
+<h3 class="pagination"> <%= paginate @articles %> </h3>
