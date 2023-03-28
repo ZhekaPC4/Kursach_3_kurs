@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :login, length: { minimum: 4 }, uniqueness: {message: "Такой логин уже существует"}
   validates :name, length: { minimum: 2 }
   validates :password, length: { minimum: 6 }, confirmation: true
-  has_many :articles
+  has_many :articles, dependent: :destroy, foreign_key: :author_id
 
   private
   def hash_the_password()

@@ -40,4 +40,11 @@ module ApplicationHelper
     return true
   end
 
+  def is_current_user
+    if session[:user_id].to_s != params[:id]
+      return false
+    end
+    return true
+  end
+
 end

@@ -5,25 +5,28 @@
 <input type="string" name="user[name]" value="<%= @user.name %>" placeholder="Ваше имя" id="name" class="form_element" required>
 
 <p class="form_text"> Логин </p>
-<input type="string" name="user[login]" value="<%= @user.login %>" placeholder="Ваше имя" id="name" class="form_element" required>
+<input type="string" name="user[login]" value="<%= @user.login %>" placeholder="Ваше имя" id="name" class="form_element" required <% if current_user.id != @user.id %> readonly <% end %>>
 
-<p class="form_text"> Ваш текущий пароль </p>
-<input type="password" name="user[password_old]" placeholder="Текущий пароль" class="form_element" required>
-<% if current_user.role == "admin"  %>
-    <p class="form_text"> Должность </p>
-    <%= select_tag "user[role]", options_for_select([ "admin", "editor", "visitor" ], @user.role) %>
+<% if check_is_admin  %>
+  <p class="form_text"> Должность </p>
+  <%= select_tag "user[role]", options_for_select([ "admin", "editor", "visitor" ], @user.role) %>
+<% end %>
+
+<% if is_current_user  %>
+  <p class="form_text"> Ваш текущий пароль </p>
+  <input type="password" name="user[password_old]" placeholder="Текущий пароль" class="form_element" required>
 <% end %>
 
 <div class = "change_pass">
-    <p class="form_text"> Сменить пароль? </p>
-    <input type="checkbox" name="user[change_pass]" class="form_text" value="false" id="password_checkbox" onchange="change_pass();"> 
+  <p class="form_text"> Сменить пароль? </p>
+  <input type="checkbox" name="user[change_pass]" class="form_text" value="false" id="password_checkbox" onchange="change_pass();"> 
 </div>
 
 <div id="pass_change" class="pass_change">
-    <p class="form_text"> Новый пароль</p>
-    <input type="password" name="user[password]" placeholder="Пароль" id="password" class="form_element form_hidden">
-    <p class="form_text"> Подтвердите пароль </p>
-    <input type="password" name="user[password_confirmation]" placeholder="Подтвердите пароль" id="password_confirmation" class="form_element form_hidden">
+  <p class="form_text"> Новый пароль</p>
+  <input type="password" name="user[password]" placeholder="Пароль" id="password" class="form_element form_hidden">
+  <p class="form_text"> Подтвердите пароль </p>
+  <input type="password" name="user[password_confirmation]" placeholder="Подтвердите пароль" id="password_confirmation" class="form_element form_hidden">
 </div>
 <input type="submit" value="Подтвердить изменение" id="create_butt">
 
@@ -35,19 +38,19 @@
 
 <script>
 function change_pass() {
-    if (!document.getElementById('password_checkbox').checked)
-    {
-        document.getElementById('pass_change').style.display = 'none';
-        document.getElementById('password').required = false;
-        document.getElementById('password_confirmation').required = false;
-        document.getElementById('password_checkbox').value = "false";
-    }
-    else
-    {
-        document.getElementById('pass_change').style.display = 'block';
-        document.getElementById('password').required = true;
-        document.getElementById('password_confirmation').required = true;
-        document.getElementById('password_checkbox').value = "true";
-    }
+  if (!document.getElementById('password_checkbox').checked)
+  {
+    document.getElementById('pass_change').style.display = 'none';
+    document.getElementById('password').required = false;
+    document.getElementById('password_confirmation').required = false;
+    document.getElementById('password_checkbox').value = "false";
+  }
+  else
+  {
+    document.getElementById('pass_change').style.display = 'block';
+    document.getElementById('password').required = true;
+    document.getElementById('password_confirmation').required = true;
+    document.getElementById('password_checkbox').value = "true";
+  }
 }
 </script>

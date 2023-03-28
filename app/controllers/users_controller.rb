@@ -59,17 +59,18 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: params[:id])
-    if current_user.password != user_change_params[:password_old] 
+    if current_user.password != user_change_params[:password_old] && !check_is_admin
       flash[:update_error] = "Неверный пароль"
       redirect_to user_edit_path(@user.id) and return
     else
       if user_change_params[:change_pass]
         @user.update({login: user_change_params[:login], name: user_change_params[:name], password: user_change_params[:password]})
-      else 
-        @user.update({login: user_change_params[:login], name: user_change_params[:name], password: user_change_params[:password_old_unhashed]})
-      end
-      if @user.save && current_user.role == "admin"
-        @user.update({role: user_change_params[:role]})
+      else
+        if is_current_user
+          @user.update({login: user_change_params[:login], name: user_change_params[:name], password: user_change_params[:password_old_unhashed]})
+        elsif check_is_admin
+          @user.update({name: user_change_params[:name], role: user_change_params[:role]})
+        end
       end
       if @user.save
         redirect_to user_path(@user.id) and return
