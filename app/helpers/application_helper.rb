@@ -29,7 +29,13 @@ module ApplicationHelper
 
   def is_admin
     if current_user.role != "admin"
-      redirect_to main_page_path and return false
+      redirect_to main_page_path
+    end
+  end
+
+  def check_is_admin
+    if current_user.role != "admin"
+      return false
     end
     return true
   end

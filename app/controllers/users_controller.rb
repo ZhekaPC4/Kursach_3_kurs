@@ -82,13 +82,14 @@ class UsersController < ApplicationController
 
   def delete
     @user = User.find_by(id: params[:id])
-    if is_user_or_admin
-      if session[:user_id] == @user.id
-        session[:user_id] = nil
-      end
-      @user.destroy
-      redirect_to user_index_path
+    if !check_is_admin
+      session[:user_id] = nil
+      path = main_page_path
+    else 
+      path = user_index_path
     end
+    @user.destroy
+    redirect_to path and return
   end
 
   private
