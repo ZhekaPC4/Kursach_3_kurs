@@ -1,5 +1,4 @@
 <h1>Новая статья<h1>
-<h3 class="error"><%= flash[:new_error] %><h3>
 
 <form action="<%= article_create_path %>" method="GET" class="forma">
 
@@ -7,11 +6,11 @@
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
 <input type="string" name="article[title]" placeholder="Заголовок" class="form_element" required>
-<input type="string" name="article[text]" placeholder="Содержание" id="name" class="form_element" required>
+<textarea name="article[text]" placeholder="Содержание" id="name" class="form_element"  rows="20" required></textarea>
 <input type="string" name="article[author_id]" value="<%= current_user.id %>" hidden>
-<a сlass="form_element"> Автор <%= current_user.name %> </a>
+<a class="form_element"> Автор <%= current_user.name %> </a>
 <input type="submit" value="Подтвердить создание" id="create_butt">
 
 </form>
 
-<h3 class="error" id="error"><%= flash[:reg_error] %><h3>
+<h3 class="error" id="error"> <%= flash[:new_article_error] %> <h3>

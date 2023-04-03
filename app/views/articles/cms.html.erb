@@ -1,0 +1,11 @@
+<h1>CMS статей</h1>
+<ul>
+  <% @articles.each do |article| %>
+    <li class="news">
+      <a class="news_title" href="/articles/<%= article.id %>">
+        <%= article.title %>
+      </a>
+    </li>
+  <% end %>
+</ul>
+<h3 class="pagination"> <%= paginate @articles %> </h3>

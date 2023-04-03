@@ -44,13 +44,13 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to user_path(id: @user.id)
     else
-      flash[:reg_error] = @user.password
+      flash[:reg_error] = "Ошибка сохранения, логин уже занят или данные слишком короткие"
       redirect_to user_new_path
     end
   end
 
   def index
-    @users = User.order(id: :desc).page params[:page]
+    @users = User.order(id: :desc).page(params[:page]).per(10)
   end
 
   def edit

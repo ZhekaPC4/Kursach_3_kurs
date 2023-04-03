@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get "article/:id/delete", to: 'articles#delete', as: :article_delete
   get "article/:id/edit", to: 'articles#edit', as: :article_edit
   get "article/:id/update", to: 'articles#update', as: :article_update
+  get "article/cms", to: 'articles#cms', as: :article_cms
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

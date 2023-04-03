@@ -1,6 +1,8 @@
 <h1> <%= @article.title%> </h1>
-<a> <%= @article.text%> </a>
-<h3> Автор <%= @article.author.name%> </h3>
+<a class="show_news_text"><%= @article.text%></a>
+<br>
+<a href="/user/id/<%= @article.author_id %>" class="author"> Автор <%= @article.author.name%> </a>
+<br>
  <% if current_user != nil %>  
     <% if current_user.role == "admin" || current_user.role == "editor" %>  
         <a class="delete_button" href=<%= article_delete_path%>> Удалить эту статью </a>

@@ -1,8 +1,8 @@
 class ArticlesController < ApplicationController
   before_action :is_admin_or_editor, except: [:index, :show]
   
-   def index
-    @articles = Article.order(id: :desc).page params[:page]
+  def index
+    @articles = Article.order(id: :desc).page(params[:page]).per(5)
   end
 
   def show
@@ -37,10 +37,15 @@ class ArticlesController < ApplicationController
     if @article.save
       redirect_to article_by_id_path(@article.id)
     else 
-      flash[:new_error] = "Ошибка сохранения"
+      flash[:new_article_error] = "Слишком короткое навзание или содержание статьи"
+      redirect_to article_new_path
     end
   end
   
+  def cms
+    @articles = Article.order(id: :desc).page(params[:page]).per(15)
+  end
+
   private
   def article_params
     new_params = params.require(:article).permit(:title, :text, :author_id)

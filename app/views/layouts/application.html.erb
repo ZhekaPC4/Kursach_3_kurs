@@ -17,6 +17,7 @@
       <a class="site_header_button" href=<%= user_log_out_path %>>Выйти из аккаунта</a>
       <% if current_user.role == "admin" || current_user.role == "editor" %>  
         <a class="site_header_button" href=<%= article_new_path %>>Новая статья</a>
+        <a class="site_header_button" href=<%= article_cms_path %>>CMS статей</a>
       <% end %>
       <% if current_user.role == "admin" %>  
         <a class="site_header_button" href=<%= user_index_path %>>Пользователи</a>

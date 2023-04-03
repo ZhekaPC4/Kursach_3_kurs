@@ -9,6 +9,6 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.timestamps
     end
     
-    User.create(login: "Dababy", password: hash_password("Dababy", "PivoPivo"), name: "Dababer", role: "admin")
+    User.create(login: "1234567890", password: "1234567890", name: "1234567890", role: "admin")
   end
 end
