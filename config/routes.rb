@@ -20,12 +20,12 @@ Rails.application.routes.draw do
   post "/user/update/:id", to: 'users#update', as: :user_update
 
 
-  get "article/new", to: 'articles#new', as: :article_new
-  get "article/create", to: 'articles#create', as: :article_create
-  get "article/:id/delete", to: 'articles#delete', as: :article_delete
-  get "article/:id/edit", to: 'articles#edit', as: :article_edit
-  get "article/:id/update", to: 'articles#update', as: :article_update
-  get "article/cms", to: 'articles#cms', as: :article_cms
+  get "/article/new", to: 'articles#new', as: :article_new
+  post "/article/create", to: 'articles#create', as: :article_create
+  get "/article/:id/delete", to: 'articles#delete', as: :article_delete
+  get "/article/:id/edit", to: 'articles#edit', as: :article_edit
+  post "/article/:id/update", to: 'articles#update', as: :article_update
+  get "/article/cms", to: 'articles#cms', as: :article_cms
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -53,13 +53,14 @@
     text-align: center;
 }
 .show_news_text{
-    word-break: break-all;
+    word-break: normal;
+    white-space: pre-wrap;
 }
 .author{
     text-decoration: none;
     color: black;
     font-size: 22px;
-    font-weight: bold;
+    margin-right: 50px;
 }
 .news_title{
     text-decoration: none;
@@ -68,5 +69,7 @@
     font-weight: bold;
 }
 .news{
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
 }

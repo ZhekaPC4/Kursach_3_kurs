@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :is_admin_or_editor, except: [:index, :show]
   
   def index
@@ -15,6 +16,7 @@ class ArticlesController < ApplicationController
   def delete
     @article = Article.find(params[:id])
     @article.destroy
+    redirect_to main_page_path
   end
 
   def edit

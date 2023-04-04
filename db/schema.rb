@@ -18,6 +18,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_03_115000) do
     t.bigint "author_id"
     t.string "title", null: false
     t.string "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_articles_on_author_id"
   end
 
