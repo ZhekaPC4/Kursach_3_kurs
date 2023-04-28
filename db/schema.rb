@@ -10,27 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_03_115000) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_28_103229) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "articles", force: :cascade do |t|
-    t.bigint "author_id"
-    t.string "title", null: false
-    t.string "text", null: false
+  create_table "orders", force: :cascade do |t|
+    t.string "delivery_data"
+    t.float "total_price"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "role"
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string "current_status"
+    t.string "status_commentary"
+    t.bigint "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["author_id"], name: "index_articles_on_author_id"
+    t.index ["order_id"], name: "index_statuses_on_order_id"
+  end
+
+  create_table "teas", force: :cascade do |t|
+    t.integer "price", null: false
+    t.string "name", null: false
+    t.string "description"
+    t.integer "weight", null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "login", null: false
-    t.string "name", null: false
     t.string "password", null: false
-    t.string "role", default: "visitor", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "name", null: false
+    t.string "surname", null: false
+    t.string "lastname"
+    t.string "delivery_data"
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
-  add_foreign_key "articles", "users", column: "author_id"
+  add_foreign_key "orders", "users"
+  add_foreign_key "statuses", "orders"
+  add_foreign_key "users", "roles"
 end
