@@ -7,7 +7,7 @@ class AddUsers < ActiveRecord::Migration[7.0]
       t.string :surname, length: {minimum: 2}, presence: true, null: false
       t.string :lastname, length: {minimum: 2}
       t.string :delivery_data, length: {minimum: 5}
-      t.references :role, foreign_key: {to_table: :roles}
+      t.references :role, foreign_key: {to_table: :roles}, null: false, default: 3
     end
     
     User.create(login: "1234567890", password: "1234567890", password_confirmation: "1234567890", name: "Василий", surname: "Алибабаевич", role_id: 1)

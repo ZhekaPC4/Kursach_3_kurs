@@ -57,7 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_112218) do
     t.string "surname", null: false
     t.string "lastname"
     t.string "delivery_data"
-    t.bigint "role_id"
+    t.bigint "role_id", default: 3, null: false
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
