@@ -1,0 +1,15 @@
+<h1>CMS чая</h1>
+<ul>
+  <% @teas.each do |tea| %>
+    <div class="news">
+      <a class="news_title" href="/teas/<%= tea.id %>">
+        <%= tea.name %>
+      </a>
+      <div>
+        <a> Цена <%= tea.price%> </a>
+        <a> Вес <%= tea.weight%> </a>
+      </div>
+    </div>
+  <% end %>
+</ul>
+<h3 class="pagination"> <%= paginate @teas %> </h3>

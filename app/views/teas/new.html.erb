@@ -1,0 +1,14 @@
+<h1>Новая чай<h1>
+
+<form action="<%= tea_create_path %>" method="POST" class="forma">
+
+
+<input type="string" name="tea[name]" placeholder="Имя" class="form_element" required>
+<textarea name="tea[description]" placeholder="Описание" id="name" class="form_element" wrap="soft" rows="10" required></textarea>
+<input type="string" name="tea[price]" placeholder="Цена" class="form_element" required>
+<input type="string" name="tea[weight]" placeholder="Вес" class="form_element" required>
+<input type="submit" value="Подтвердить создание" id="create_butt">
+
+</form>
+
+<h3 class="error" id="error"> <%= flash[:new_tea_error] %> <h3>

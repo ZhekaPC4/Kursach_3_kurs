@@ -1,0 +1,15 @@
+<h1> <%= @tea.name%> </h1>
+<h1> Описание </h1>
+<h1> <%= @tea.description%> </h1>
+<h1> Вес <%= @tea.weight%> грамм </h1>
+<h1>Цена </h1>
+<h1> <%= @tea.price%> руб</h1>
+
+
+<br>
+
+ <% if current_user.role_id == 2%>  
+   <!-- <a class="delete_button" href=<%= tea_delete_path%>> Удалить этот чай </a>
+    <br>  -->
+    <a class="edit_button" href=<%= tea_edit_path%>> Изменить этот чай </a>
+<% end %>

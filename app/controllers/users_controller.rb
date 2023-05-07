@@ -64,12 +64,12 @@ class UsersController < ApplicationController
       redirect_to user_edit_path(@user.id) and return
     else
       if user_change_params[:change_pass]
-        @user.update({login: user_change_params[:login], name: user_change_params[:name], password: user_change_params[:password]})
+        @user.update({login: user_change_params[:login], name: user_change_params[:name], surname: user_change_params[:surname], lastname: user_change_params[:lastname], delivery_data: user_change_params[:delivery_data], password: user_change_params[:password]})
       else
         if is_current_user
-          @user.update({login: user_change_params[:login], name: user_change_params[:name], password: user_change_params[:password_old_unhashed]})
+          @user.update({login: user_change_params[:login], name: user_change_params[:name], surname: user_change_params[:surname], lastname: user_change_params[:lastname], delivery_data: user_change_params[:delivery_data], password: user_change_params[:password_old_unhashed]})
         elsif check_is_admin
-          @user.update({name: user_change_params[:name], role: user_change_params[:role]})
+          @user.update({name: user_change_params[:name], role_id: Role.find_by(role: user_change_params[:role]).id })
         end
       end
       if @user.save
@@ -95,12 +95,12 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    new_params = params.require(:user).permit(:name, :login, :password, :password_confirmation)
+    new_params = params.require(:user).permit(:name, :surname, :lastname, :login, :password, :password_confirmation)
     new_params.permit!
   end
 
   def user_change_params
-    new_params = params.require(:user).permit(:name, :login, :password, :password_confirmation, :password_old,:change_pass, :role, :password_old_unhashed)
+    new_params = params.require(:user).permit(:name, :surname, :lastname, :login, :delivery_data, :password, :password_confirmation, :password_old,:change_pass, :role, :password_old_unhashed)
     new_params[:password_old_unhashed] = new_params[:password_old];
     new_params[:password_old] = hash_password(current_user.login, new_params[:password_old])
     new_params.permit!

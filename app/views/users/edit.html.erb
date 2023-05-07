@@ -3,14 +3,23 @@
 <form action="<%= user_update_path %>" method="POST" class="forma">
   <p class="form_text"> Имя </p>
   <input type="string" name="user[name]" value="<%= @user.name %>" placeholder="Ваше имя" id="name" class="form_element" required>
+    
+    <p class="form_text"> Фамилия </p>
+  <input type="string" name="user[surname]" value="<%= @user.surname %>" placeholder="Ваша фамилия" id="surname" class="form_element" required>
+
+    <p class="form_text"> Отчество </p>
+  <input type="string" name="user[lastname]" value="<%= @user.lastname %>" placeholder="Ваше отчество" id="lastname" class="form_element">
 
   <p class="form_text"> Логин </p>
   <input type="string" name="user[login]" value="<%= @user.login %>" placeholder="Ваше имя" id="name" class="form_element" required <% if current_user.id != @user.id %> readonly <% end %>>
 
   <% if check_is_admin  %>
     <p class="form_text"> Должность </p>
-    <%= select_tag "user[role]", options_for_select([ "admin", "editor", "visitor" ], @user.role) %>
+    <%= select_tag "user[role]", options_for_select([ "admin", "employee", "visitor" ], Role.find(@user.role_id).role) %>
   <% end %>
+
+   <p class="form_text"> Данные доставки </p>
+  <input type="string" name="user[delivery_data]" value="<%= @user.delivery_data %>" placeholder="Данные доставки" id="delivery_data" class="form_element">
 
   <% if is_current_user  %>
     <p class="form_text"> Ваш текущий пароль </p>

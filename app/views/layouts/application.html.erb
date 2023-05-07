@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Новости</title>
+    <title>СБЭУ</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -15,11 +15,11 @@
     <% if current_user.present? %>  
       <a class="site_header_button" href=<%= user_path(current_user.id) %>>Профиль</a>
       <a class="site_header_button" href=<%= user_log_out_path %>>Выйти из аккаунта</a>
-      <% if current_user.role == "admin" || current_user.role == "editor" %>  
-        <a class="site_header_button" href=<%= article_new_path %>>Новая статья</a>
-        <a class="site_header_button" href=<%= article_cms_path %>>CMS статей</a>
+      <% if current_user.role_id == 2 %>  
+        <a class="site_header_button" href=<%= tea_new_path %>>Новый чай</a>
+        <a class="site_header_button" href=<%= tea_cms_path %>>CMS чая</a> 
       <% end %>
-      <% if current_user.role == "admin" %>  
+      <% if current_user.role_id == 1 %>  
         <a class="site_header_button" href=<%= user_index_path %>>Пользователи</a>
       <% end %>
     <% else %>  
