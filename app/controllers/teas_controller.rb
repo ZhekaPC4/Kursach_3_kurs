@@ -15,7 +15,7 @@ class TeasController < ApplicationController
   end
 
   def addtocart
-    if !current_user.orders.present? || Status.find_by(order_id: current_user.orders.last.id).current_status != "Bucket"
+    if !current_user.orders.present? || Status.where(order_id: current_user.orders.last.id).last.current_status != "Bucket"
       Order.create!(user_id: current_user.id, delivery_data: "temp_info", total_price: 1)
       Status.create(order_id: current_user.orders.last.id, current_status: "Bucket")
       OrderedTea.create(order_id: current_user.orders.last.id, tea_id: params[:id], amount: 1)
