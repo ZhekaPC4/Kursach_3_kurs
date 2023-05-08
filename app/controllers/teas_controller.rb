@@ -1,6 +1,7 @@
 class TeasController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :is_employee_return, except: [:index, :show]
+  before_action :is_employee_return, except: [:index, :show, :addtocart]
+  before_action :user_present, only: [:addtocart]
   
   def index
     @teas = Tea.order(id: :desc).page(params[:page]).per(5)
@@ -11,6 +12,19 @@ class TeasController < ApplicationController
   end
   
   def new
+  end
+
+  def addtocart
+    if !current_user.orders.present? || Status.find_by(order_id: current_user.orders.last.id).current_status != "Bucket"
+      Order.create!(user_id: current_user.id, delivery_data: "temp_info", total_price: 1)
+      Status.create(order_id: current_user.orders.last.id, current_status: "Bucket")
+      OrderedTea.create(order_id: current_user.orders.last.id, tea_id: params[:id], amount: 1)
+    elsif OrderedTea.find_by(order_id: current_user.orders.last.id, tea_id: params[:id]).present?
+      ord_tea = OrderedTea.find_by(order_id: current_user.orders.last.id, tea_id: params[:id])
+      ord_tea.update({amount: ord_tea.amount + 1})
+    else
+      OrderedTea.create(order_id: current_user.orders.last.id, tea_id: params[:id], amount: 1)
+    end
   end
 
   def create

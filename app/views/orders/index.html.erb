@@ -1,0 +1,17 @@
+<h1>CMS заказов</h1>
+<% if @orders.present? %>
+    <ul>
+    <% @orders.each do |order| %>
+        <div class="news">
+        <a class="news_title" href="/teas/<%= order.id %>">
+            <%= order.id %>
+        </a>
+        <div>
+            <a> Цена <%= order.total_price%> </a>
+        </div>
+        </div>
+    <% end %>
+    </ul>
+<% else %>
+    <h1>Пока пусто</h1>
+<% end %>

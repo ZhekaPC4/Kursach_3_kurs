@@ -19,6 +19,16 @@ module ApplicationHelper
     end
   end
 
+  def is_employee
+    if !current_user.present?
+      return false
+    elsif current_user.role_id != 2
+      return false
+    end
+    return true
+  end
+
+
   def is_user_or_admin
     if session[:user_id].to_s != params[:id] && current_user.role_id != 1
       redirect_to main_page_path and return false
@@ -44,6 +54,12 @@ module ApplicationHelper
       return false
     end
     return true
+  end
+
+  def user_present
+    unless current_user.present?
+      redirect_to user_login_path
+    end
   end
 
 end

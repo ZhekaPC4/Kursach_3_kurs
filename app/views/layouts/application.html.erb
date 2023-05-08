@@ -14,6 +14,8 @@
     <a class="site_header_button" href=<%= main_page_path %>>На главную страницу</a>
     <% if current_user.present? %>  
       <a class="site_header_button" href=<%= user_path(current_user.id) %>>Профиль</a>
+      <a class="site_header_button" href=<%= order_bucket_path %>>Корзина</a>
+      <a class="site_header_button" href=<%= order_index_path %>>CMS заказов</a> 
       <a class="site_header_button" href=<%= user_log_out_path %>>Выйти из аккаунта</a>
       <% if current_user.role_id == 2 %>  
         <a class="site_header_button" href=<%= tea_new_path %>>Новый чай</a>

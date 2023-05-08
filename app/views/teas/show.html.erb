@@ -5,10 +5,13 @@
 <h1>Цена </h1>
 <h1> <%= @tea.price%> руб</h1>
 
+<form action="<%= tea_addtocart_path %>">
+    <input type="submit" value="Добавить в корзину" />
+</form>
 
 <br>
 
- <% if current_user.role_id == 2%>  
+ <% if current_user.present? && current_user.role_id == 2%>  
    <!-- <a class="delete_button" href=<%= tea_delete_path%>> Удалить этот чай </a>
     <br>  -->
     <a class="edit_button" href=<%= tea_edit_path%>> Изменить этот чай </a>

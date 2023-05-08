@@ -1,0 +1,24 @@
+<% if !@order.present?%>
+    <h1>Ваша корзина пуста</h1>
+<% else %>
+    <ul>
+    <%             
+        sum_price = 0
+        @orders.each do |orderedTea| %>
+        <li>
+        <a class="news_title" href="/tea/<%= orderedTea.id %>">
+            <%= orderedTea.tea.name %>
+        </a>
+        <div>
+            <a> Цена за шт <%= orderedTea.tea.price%> </a>
+            <a> Шт <%= orderedTea.amount%> </a>
+            <a> Суммарная цена <%= orderedTea.amount * orderedTea.tea.price%> </a>
+            <%  sum_price += orderedTea.amount * orderedTea.tea.price%>
+        </div>
+        </li>
+    <% end %>
+    </ul>
+    <a> Общая стоимость <%= sum_price%> </a>
+    <a class="edit_button" href=<%= order_create_path%>> Оформить заказ </a>
+    <h3 class="error" id="error"><%= flash[:order_error] %><h3>
+<% end %>

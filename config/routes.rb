@@ -28,9 +28,10 @@ Rails.application.routes.draw do
   
   get "/teas/cms", to: 'teas#cms', as: :tea_cms
   
-  
-  
-
+  get "/tea/:id/addtocart", to: 'teas#addtocart', as: :tea_addtocart
+  get "/orders/", to: 'orders#index', as: :order_index
+  get "/bucket/", to: 'orders#bucket', as: :order_bucket
+  get "/bucket/createOrder", to: 'orders#create', as: :order_create
 
 
 
