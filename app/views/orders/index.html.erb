@@ -1,17 +1,20 @@
-<h1>CMS заказов</h1>
+<h1><% if current_user.role_id == 2 %> CMS заказов <% else %> Мои заказы <% end %></h1>
 <% if @orders.present? %>
     <ul>
     <% @orders.each do |order| %>
         <div class="news">
-        <a class="news_title" href="/teas/<%= order.id %>">
+        <a class="news_title" href="/order/<%= order.id %>">
             <%= order.id %>
         </a>
         <div>
             <a> Цена <%= order.total_price%> </a>
+            <a> Текущий статус <%=Status.where(order_id: order.id).last.current_status %> </a>
         </div>
         </div>
     <% end %>
     </ul>
+    <h3 class="pagination"> <%= paginate @orders %> </h3>
 <% else %>
     <h1>Пока пусто</h1>
 <% end %>
+

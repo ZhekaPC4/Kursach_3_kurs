@@ -1,11 +1,13 @@
 class OrdersController < ApplicationController
-    before_action :user_present, only: [:bucket, :create, :index]
+    skip_before_action :verify_authenticity_token
+    before_action :user_present, only: [:bucket, :create, :index, :status]
+    before_action :is_employee_return, only: [:new_status]
 
     def index
         if is_employee 
-            @orders = Order.where(id: Order.all.reject { |order| order.statuses.last.current_status == "Bucket" }.map(&:id))
+            @orders = Order.where(id: Order.all.reject { |order| order.statuses.last.current_status == "Bucket" }.map(&:id)).order(id: :desc).page(params[:page]).per(10)
         else
-            @orders = Order.where(user_id: current_user.id, id: Order.all.reject { |order| order.statuses.last.current_status == "Bucket" }.map(&:id))
+            @orders = Order.where(user_id: current_user.id, id: Order.all.reject { |order| order.statuses.last.current_status == "Bucket" }.map(&:id)).order(id: :desc).page(params[:page]).per(10)
         end
     end
 
@@ -34,4 +36,15 @@ class OrdersController < ApplicationController
         redirect_to order_bucket_path
     end
 
+    def status
+        @order = Order.find(params[:id])
+    end
+
+    def new_status
+        stat = Status.new(current_status: params[:current_status], status_commentary: params[:status_commentary], order_id: params[:id])
+        unless stat.save
+            flash[:status_error] = "Проверьте введенные данные"
+        end
+        redirect_to order_status_path(params[:id])
+    end
 end

@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   get "/orders/", to: 'orders#index', as: :order_index
   get "/bucket/", to: 'orders#bucket', as: :order_bucket
   get "/bucket/createOrder", to: 'orders#create', as: :order_create
+  get "/order/:id", to: 'orders#status', as: :order_status
+  post "/order/:id/new_status", to: 'orders#new_status', as: :order_new_status
 
 
 

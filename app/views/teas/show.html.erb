@@ -8,6 +8,13 @@
 <form action="<%= tea_addtocart_path %>">
     <input type="submit" value="Добавить в корзину" />
 </form>
+<p> Этого чая у вас в корзине 
+<% if !current_user.orders.present? || Status.where(order_id: current_user.orders.last.id).last.current_status != "Bucket" || !OrderedTea.find_by(order_id: current_user.orders.last.id, tea_id: params[:id]).present?%>
+        0
+    <% else%>
+        <%= OrderedTea.find_by(order_id: current_user.orders.last.id, tea_id: params[:id]).amount%>
+    <%end%>
+</p>
 
 <br>
 

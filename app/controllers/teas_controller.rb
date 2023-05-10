@@ -4,7 +4,7 @@ class TeasController < ApplicationController
   before_action :user_present, only: [:addtocart]
   
   def index
-    @teas = Tea.order(id: :desc).page(params[:page]).per(5)
+    @teas = Tea.order(id: :desc).page(params[:page]).per(10)
   end
 
   def show

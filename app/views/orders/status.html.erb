@@ -1,0 +1,56 @@
+Заказ №<%= @order.id%>
+<br>
+<% if current_user.id != @order.user_id%>
+    <a class="news_title" href="/user/id/<%= @order.user_id %>">
+            Заказчик <%= @order.user.name%> 
+             <%= if @order.user.lastname.present? 
+                @order.user.lastname 
+            end%>
+    </a>
+
+<%end%>
+<h1> Содержимое заказа </h1>
+
+<ul>
+    <%  OrderedTea.where(order_id: @order.id).each do |orderedTea| %>
+        <div class="news">
+            <a class="news_title" href="/tea/<%= orderedTea.tea_id %>"> 
+                Название <%= orderedTea.tea.name %> </a>
+            </a>
+            <div>
+                <a> Кол-во <%= orderedTea.amount %> </a>
+                <a> Цена за шт <%= orderedTea.price_during_order %> </a>
+                <a> Общая цена <%= orderedTea.price_during_order * orderedTea.amount %> </a>
+            </div>
+        </div>
+    <% end %>
+</ul>
+<a> Общая цена <%= @order.total_price %> </a>
+
+<h1> Текущий статус <%= Status.where(order_id: params[:id]).last.current_status %> </h1>
+
+<h1> История статусов </h1>
+<ul>
+    <% Status.where(order_id: params[:id]).each do |status| %>
+        <div class="news">
+            <a> Cтатус <%= status.current_status %> </a>
+                <% if status.status_commentary.present? %>
+                    <a> Комменатрий:  <%= status.status_commentary %> </a>
+                <% end %>
+            </a>
+            <div>
+                <a><%= status.updated_at.in_time_zone('Moscow').strftime('%a %b %e %T %Y')%></a>
+            </div>
+        </div>
+    <% end %>
+</ul>
+
+<% if is_employee %>
+    <form action="<%= order_new_status_path(id: params[:id]) %>" method="POST" class="forma">
+        <div class="form_element"> <%= select_tag "current_status", options_for_select(["Paused", "Shipped", "Delivered", "Completed", "Cancelled" ], "Paused")%> </div>
+        <input type="string" name="status_commentary" placeholder="Комменарий к статусу" id="name" class="form_element">
+        <input type="submit" value="Подтвердить" id="create_butt">
+    </form>
+
+    <h3 class="error" id="error"><%= flash[:status_error] %><h3>
+<% end %>
