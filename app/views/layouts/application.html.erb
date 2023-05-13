@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>СБЭУ</title>
+    <title>Цветочек</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -14,15 +14,20 @@
     <a class="site_header_button" href=<%= main_page_path %>>На главную страницу</a>
     <% if current_user.present? %>  
       <a class="site_header_button" href=<%= user_path(current_user.id) %>>Профиль</a>
-      <a class="site_header_button" href=<%= order_bucket_path %>>Корзина</a>
-      <a class="site_header_button" href=<%= order_index_path %>> <% if current_user.role_id == 2 %> CMS заказов <% else %> Мои заказы <% end %> </a> 
+      <% if current_user.role_id == 3 %>
+        <a class="site_header_button" href=<%= order_bucket_path %>>Корзина</a>
+        <a class="site_header_button" href=<%= order_index_path %>> Мои заказы </a>
+      <% end %>
       <a class="site_header_button" href=<%= user_log_out_path %>>Выйти из аккаунта</a>
       <% if current_user.role_id == 2 %>  
-        <a class="site_header_button" href=<%= tea_new_path %>>Новый чай</a>
+        <a class="site_header_button" href=<%= order_index_path %>> CMS заказов </a>
+        <a class="site_header_button" href=<%= tea_new_path %>>Добавить новый чай</a>
         <a class="site_header_button" href=<%= tea_cms_path %>>CMS чая</a> 
       <% end %>
       <% if current_user.role_id == 1 %>  
-        <a class="site_header_button" href=<%= user_index_path %>>Пользователи</a>
+        <a class="site_header_button" href=<%= tea_new_path %>>Добавить новый чай</a>
+        <a class="site_header_button" href=<%= tea_cms_path %>>CMS чая</a> 
+        <a class="site_header_button" href=<%= user_index_path %>>CMS Пользователей</a>
       <% end %>
     <% else %>  
       <a class="site_header_button" href=<%= user_login_path %>>Авторизация</a>

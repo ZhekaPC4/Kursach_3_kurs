@@ -3,13 +3,13 @@
 <ul>
   <% @users.each do |user| %>
     <li>
-      <a class="news_title" href="/user/id/<%= user.id %>">
+      <a class="tea_text" href="/user/id/<%= user.id %>">
         <%= user.login %>
       </a>
-        <p>
+        <p style="color: green;">
           <%= user.name%> 
         </p>
-        <p>
+        <p style="color: green;">
           <%= user.role.role%> 
         </p>
     </li>

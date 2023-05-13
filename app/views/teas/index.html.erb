@@ -1,11 +1,13 @@
-<h1>Чайный магазин СБЭУ</h1>
-<ul>
-  <% @teas.each do |tea| %>
-    <li>
-      <a class="news_title" href="/tea/<%= tea.id %>">
-        <%= tea.name %>
-      </a>
-    </li>
-  <% end %>
-</ul>
-<h3 class="pagination"> <%= paginate @teas %> </h3>
+<div class="fon">
+  <h1>Чайный магазин Цветочек</h1>
+  <ul>
+    <% @teas.each do |tea| %>
+      <li>
+        <a class="news_title" href="/tea/<%= tea.id %>">
+          <%= tea.name %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+  <h3 class="pagination"> <%= paginate @teas %> </h3>
+<div>

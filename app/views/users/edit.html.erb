@@ -4,10 +4,10 @@
   <p class="form_text"> Имя </p>
   <input type="string" name="user[name]" value="<%= @user.name %>" placeholder="Ваше имя" id="name" class="form_element" required>
     
-    <p class="form_text"> Фамилия </p>
-  <input type="string" name="user[surname]" value="<%= @user.surname %>" placeholder="Ваша фамилия" id="surname" class="form_element" required>
+    <p class="form_text"> Фамилия (опционально) </p>
+  <input type="string" name="user[surname]" value="<%= @user.surname %>" placeholder="Ваша фамилия" id="surname" class="form_element">
 
-    <p class="form_text"> Отчество </p>
+    <p class="form_text"> Отчество (опционально) </p>
   <input type="string" name="user[lastname]" value="<%= @user.lastname %>" placeholder="Ваше отчество" id="lastname" class="form_element">
 
   <p class="form_text"> Логин </p>

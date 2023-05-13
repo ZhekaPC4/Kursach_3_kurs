@@ -1,7 +1,7 @@
 class TeasController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :is_employee_return, except: [:index, :show, :addtocart]
-  before_action :user_present, only: [:addtocart]
+  before_action :is_employee_or_admin_return, except: [:index, :show, :addtocart]
+  before_action :is_visitor_return, only: [:addtocart]
   
   def index
     @teas = Tea.order(id: :desc).page(params[:page]).per(10)
@@ -59,7 +59,7 @@ class TeasController < ApplicationController
   end
   
   def cms
-    @teas = Tea.order(id: :desc).page(params[:page]).per(15)
+    @teas = Tea.order(id: :desc).page(params[:page]).per(20)
   end
 
   private

@@ -96,6 +96,9 @@ class UsersController < ApplicationController
   private
   def user_params
     new_params = params.require(:user).permit(:name, :surname, :lastname, :login, :password, :password_confirmation)
+    unless new_params[:name].present?
+      new_params[:name] = "Гость"
+    end
     new_params.permit!
   end
 

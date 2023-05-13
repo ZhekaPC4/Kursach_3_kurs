@@ -7,8 +7,8 @@
             <%= order.id %>
         </a>
         <div>
-            <a> Цена <%= order.total_price%> </a>
-            <a> Текущий статус <%=Status.where(order_id: order.id).last.current_status %> </a>
+            <a class="tea_text"> Цена <%= order.total_price%> </a>
+            <a class="tea_text"> Текущий статус <%=Status.where(order_id: order.id).last.current_status %> </a>
         </div>
         </div>
     <% end %>

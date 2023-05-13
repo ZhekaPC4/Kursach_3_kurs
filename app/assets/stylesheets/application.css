@@ -68,8 +68,20 @@
     font-size: 22px;
     font-weight: bold;
 }
+.tea_text{
+    text-decoration: none;
+    color: rgb(33, 65, 210);
+    font-size: 22px;
+    font-weight: bold;
+}
 .news{
     margin-bottom: 25px;
     display: flex;
     justify-content: space-between;
+}
+body{
+    background-image: url(1.jpg);
+    background-size: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 110%;
 }

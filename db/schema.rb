@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_112218) do
     t.string "login", null: false
     t.string "password", null: false
     t.string "name", null: false
-    t.string "surname", null: false
+    t.string "surname"
     t.string "lastname"
     t.string "delivery_data"
     t.bigint "role_id", default: 3, null: false

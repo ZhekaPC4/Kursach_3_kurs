@@ -1,24 +1,30 @@
 <h1> <%= @tea.name%> </h1>
-<h1> Описание </h1>
-<h1> <%= @tea.description%> </h1>
 <h1> Вес <%= @tea.weight%> грамм </h1>
-<h1>Цена </h1>
-<h1> <%= @tea.price%> руб</h1>
+<h1>Цена <%= @tea.price%> руб</h1>
+<% if @tea.description.present? %>
+    <br>
+    <h1> Описание </h1>
+    <h3> <%= @tea.description%> </h3>
+    <br>
+<% end %>
 
-<form action="<%= tea_addtocart_path %>">
-    <input type="submit" value="Добавить в корзину" />
-</form>
-<p> Этого чая у вас в корзине 
-<% if !current_user.orders.present? || Status.where(order_id: current_user.orders.last.id).last.current_status != "Bucket" || !OrderedTea.find_by(order_id: current_user.orders.last.id, tea_id: params[:id]).present?%>
-        0
-    <% else%>
-        <%= OrderedTea.find_by(order_id: current_user.orders.last.id, tea_id: params[:id]).amount%>
-    <%end%>
-</p>
+<% if is_visitor%>
+    <form action="<%= tea_addtocart_path %>">
+        <input type="submit" value="Добавить в корзину" />
+    </form>
+
+    <p> Этого чая у вас в корзине 
+    <% if !current_user.orders.present? || Status.where(order_id: current_user.orders.last.id).last.current_status != "Bucket" || !OrderedTea.find_by(order_id: current_user.orders.last.id, tea_id: params[:id]).present?%>
+            0
+        <% else%>
+            <%= current_user.present? && OrderedTea.find_by(order_id: current_user.orders.last.id, tea_id: params[:id]).amount%>
+        <%end%>
+    </p>
+<% end %>
 
 <br>
 
- <% if current_user.present? && current_user.role_id == 2%>  
+ <% if current_user.present? && (current_user.role_id == 2 || current_user.role_id == 1)%>  
    <!-- <a class="delete_button" href=<%= tea_delete_path%>> Удалить этот чай </a>
     <br>  -->
     <a class="edit_button" href=<%= tea_edit_path%>> Изменить этот чай </a>

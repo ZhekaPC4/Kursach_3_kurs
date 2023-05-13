@@ -8,7 +8,7 @@
 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
 <input type="string" name="tea[name]" value="<%= @tea.name %>" placeholder="Имя" class="form_element" required>
-<textarea name="tea[description]" placeholder="Описание" value="<%= @tea.description %>" id="description" class="form_element" wrap="soft" rows="10" required></textarea>
+<textarea name="tea[description]" placeholder="Описание" id="description" class="form_element" wrap="soft" rows="10" required><%= @tea.description %></textarea>
 <input type="string" name="tea[price]" placeholder="Цена" value="<%= @tea.price %>" class="form_element" required>
 <input type="string" name="tea[weight]" placeholder="Вес" value="<%= @tea.weight %>" class="form_element" required>
 <input type="submit" value="Подтвердить создание" id="create_butt">

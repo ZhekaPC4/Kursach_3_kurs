@@ -2,12 +2,12 @@
 <ul>
   <% @teas.each do |tea| %>
     <div class="news">
-      <a class="news_title" href="/teas/<%= tea.id %>">
+      <a class="news_title" href="/tea/<%= tea.id %>">
         <%= tea.name %>
       </a>
       <div>
-        <a> Цена <%= tea.price%> </a>
-        <a> Вес <%= tea.weight%> </a>
+        <a class="tea_text"> Цена <%= tea.price%> </a>
+        <a class="tea_text"> Вес <%= tea.weight%> </a>
       </div>
     </div>
   <% end %>

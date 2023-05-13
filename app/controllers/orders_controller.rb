@@ -1,7 +1,8 @@
 class OrdersController < ApplicationController
     skip_before_action :verify_authenticity_token
-    before_action :user_present, only: [:bucket, :create, :index, :status]
     before_action :is_employee_return, only: [:new_status]
+    before_action :is_visitor_return, only: [:create, :bucket]
+    before_action :is_employee_or_visitor_return, only: [:index, :status]
 
     def index
         if is_employee 
@@ -26,7 +27,7 @@ class OrdersController < ApplicationController
             orders = OrderedTea.where(order_id: order.id)
             orders.each do |orderedTea|
                 orderedTea.update({price_during_order: orderedTea.tea.price})
-                sum_price += orderedTea.tea.price
+                sum_price += orderedTea.tea.price * orderedTea.amount
             end
             order.update({delivery_data: current_user.delivery_data, total_price: sum_price})
             Status.create(order_id: current_user.orders.last.id, current_status: "Placed")
