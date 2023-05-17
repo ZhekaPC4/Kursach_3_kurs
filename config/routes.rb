@@ -35,7 +35,8 @@ Rails.application.routes.draw do
   get "/order/:id", to: 'orders#status', as: :order_status
   post "/order/:id/new_status", to: 'orders#new_status', as: :order_new_status
 
-
+  get "bucket/more/:id", to: 'orders#more', as: :order_more
+  get "bucket/less/:id", to: 'orders#less', as: :order_less
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

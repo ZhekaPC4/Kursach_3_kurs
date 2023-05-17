@@ -6,19 +6,29 @@
         sum_price = 0
         @orders.each do |orderedTea| %>
         <li>
-        <a class="news_title" href="/tea/<%= orderedTea.id %>">
-            <%= orderedTea.tea.name %>
-        </a>
+        <div class="element_in_bucket">
+            <a class="news_title" href="/tea/<%= orderedTea.id %>">
+                <%= orderedTea.tea.name %>
+            </a>
+            <form action="<%= order_less_path(orderedTea.tea_id) %>" method="GET" class="butt_for_bucket">
+                <input type="submit" value="-" id="create_butt">
+            </form>
+
+            <form action="<%= order_more_path(orderedTea.tea_id) %>" method="GET" class="butt_for_bucket">
+                <input type="submit" value="+" id="create_butt">
+            </form>
+        </div>
         <div>
             <a> Цена за шт <%= orderedTea.tea.price%> </a>
             <a> Шт <%= orderedTea.amount%> </a>
             <a> Суммарная цена <%= orderedTea.amount * orderedTea.tea.price%> </a>
             <%  sum_price += orderedTea.amount * orderedTea.tea.price%>
         </div>
+    </form>
         </li>
     <% end %>
     </ul>
     <a> Общая стоимость <%= sum_price%> </a>
     <a class="edit_button" href=<%= order_create_path%>> Оформить заказ </a>
-    <h3 class="error" id="error"><%= flash[:order_error] %><h3>
+    <h3 class="error" id="error"><%= flash[:order_error] %></h3>
 <% end %>

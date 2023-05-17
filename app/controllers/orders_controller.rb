@@ -43,9 +43,22 @@ class OrdersController < ApplicationController
 
     def new_status
         stat = Status.new(current_status: params[:current_status], status_commentary: params[:status_commentary], order_id: params[:id])
+        ord = Order.find(params[:id])
+        ord.update({delivery_data: params[:delivery_data]})
         unless stat.save
             flash[:status_error] = "Проверьте введенные данные"
         end
         redirect_to order_status_path(params[:id])
     end
+
+    def more
+        ord_tea = OrderedTea.find_by(order_id: current_user.orders.last.id, tea_id: params[:id])
+        ord_tea.update({amount: ord_tea.amount + 1})
+    end
+
+    def less
+        ord_tea = OrderedTea.find_by(order_id: current_user.orders.last.id, tea_id: params[:id])
+        ord_tea.update({amount: ord_tea.amount - 1})
+    end
+    
 end

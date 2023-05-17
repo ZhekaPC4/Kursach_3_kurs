@@ -49,6 +49,16 @@
 .site_header{
     margin: 30px 0px;
 }
+.site_footer{
+    position:fixed;
+    right:0;
+    bottom:0;
+    width:100%;
+    height: 70px;
+    font-weight: bolder;
+    font-size:x-large;
+    color:rgb(0, 0, 0);
+}
 .pagination{
     text-align: center;
 }
@@ -70,7 +80,7 @@
 }
 .tea_text{
     text-decoration: none;
-    color: rgb(33, 65, 210);
+    color: rgb(0, 0, 0);
     font-size: 22px;
     font-weight: bold;
 }
@@ -80,8 +90,25 @@
     justify-content: space-between;
 }
 body{
-    background-image: url(1.jpg);
+    background-image: url(3.jpg);
     background-size: no-repeat;
     background-attachment: fixed;
-    background-size: 100% 110%;
+    background-size: 100% 100%;
+}
+.footer_stuff{
+    text-align: center;
+}
+.footer_stuff2{
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+}
+.element_in_bucket{
+    display: flex;
+    flex-direction: row;
+}
+.butt_for_bucket{
+    padding-left: 30px;
+    height: 20px;
+    width: 20px;
 }

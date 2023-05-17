@@ -17,7 +17,7 @@
             <a class="news_title" href="/tea/<%= orderedTea.tea_id %>"> 
                 Название <%= orderedTea.tea.name %> </a>
             </a>
-            <div>
+            <div class="tea_text">
                 <a> Кол-во <%= orderedTea.amount %> </a>
                 <a> Цена за шт <%= orderedTea.price_during_order %> </a>
                 <a> Общая цена <%= orderedTea.price_during_order * orderedTea.amount %> </a>
@@ -49,8 +49,13 @@
     <form action="<%= order_new_status_path(id: params[:id]) %>" method="POST" class="forma">
         <div class="form_element"> <%= select_tag "current_status", options_for_select(["Paused", "Shipped", "Delivered", "Completed", "Cancelled" ], "Paused")%> </div>
         <input type="string" name="status_commentary" placeholder="Комменарий к статусу" id="name" class="form_element">
+        <input type="string" name="delivery_data" value="<%= @order.delivery_data %>" placeholder="Адрес доставки" id="name" class="form_element">
         <input type="submit" value="Подтвердить" id="create_butt">
     </form>
-
-    <h3 class="error" id="error"><%= flash[:status_error] %><h3>
+    <h3 class="error" id="error"><%= flash[:status_error] %></h3>
+<% elsif %>
+    <h1> Адрес доставки </h1>
+    <p><%= @order.delivery_data %></p>
 <% end %>
+
+

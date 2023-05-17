@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>Цветочек</title>
+    <%= favicon_link_tag asset_path('4.jpg') %>
+    
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -33,10 +35,19 @@
       <a class="site_header_button" href=<%= user_login_path %>>Авторизация</a>
       <a class="site_header_button" href=<%= user_new_path %>>Регистрация</a>
     <% end %>
-
   </div>
-  
+
   <body>
     <%= yield %>
   </body>
+
+  <div class="site_footer">
+    <div class="footer_stuff2">
+      <p> Россия, г. Дубна, ул. Университетская 19 </p>
+      <p> Контактный адрес: ged.20@uni-dubna.ru </p>
+      <p> Контактный телефон: 8(800)-555-35-35 </p>
+    </div>
+  </div>
+
 </html>
+

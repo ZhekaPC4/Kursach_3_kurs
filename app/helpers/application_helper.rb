@@ -32,7 +32,7 @@ module ApplicationHelper
     if !current_user.present?
       redirect_to user_login_path and return false
     end
-    unless current_user.role_id != 2 || current_user.role_id != 1
+    unless current_user.role_id == 2 || current_user.role_id == 1
       redirect_to main_page_path and return false
     end
   end
@@ -41,7 +41,7 @@ module ApplicationHelper
     if !current_user.present?
       redirect_to user_login_path and return false
     end
-    unless current_user.role_id != 2 || current_user.role_id != 3
+    unless current_user.role_id == 2 || current_user.role_id == 3
       redirect_to main_page_path and return false
     end
   end
@@ -64,7 +64,7 @@ module ApplicationHelper
   end
 
   def is_user_or_admin
-    unless session[:user_id].to_s != params[:id] || current_user.role_id != 1
+    unless session[:user_id].to_s == params[:id] || current_user.role_id == 1
       redirect_to main_page_path and return false
     end
     return true
